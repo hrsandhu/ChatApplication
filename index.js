@@ -32,7 +32,10 @@ io.on('connection', function(socket){
     socket.color = '000000';
 
     //Check if Person joing already has a tab open and is an active client
-    if(checkuniquenick(socket.nickname,activeclients))activeclients.push(socket.nickname);
+    if(checkuniquenick(socket.nickname,activeclients)){
+        activeclients.push(socket.nickname);
+        socket.broadcast.emit('chat message', '<i>'+socket.nickname+' Has Joined the Chat'+ '</i>');
+    }
 
     //Emit activeclients list, personal username, tell client to set cookie, send existing chat history
     io.emit('au', activeclients);
@@ -44,6 +47,7 @@ io.on('connection', function(socket){
     socket.on('disconnect', function(){
         activeclients.splice(activeclients.indexOf(socket.nickname), 1);
         io.emit('au', activeclients);
+        socket.broadcast.emit('chat message', '<i>'+socket.nickname+' Has Left the Chat'+ '</i>');
     });
 
     //Incoming Chat Message
@@ -55,14 +59,19 @@ io.on('connection', function(socket){
         }
         var timestamp = getTimestamp();
         var parsedmsg= msg.split(' ');
+
+        //Checking for nick or color change
         if (parsedmsg.length===2){
+            //color change
             if (parsedmsg[0] === '/nickcolor' && parsedmsg[1].length === 6){
                 socket.color=parsedmsg[1];
             }
+            //nick change
             if (parsedmsg[0] === '/nick'){
                 if (parsedmsg[1].length > 0 && parsedmsg[1].length < 9 && checkuniquenick(parsedmsg[1],allclients) && regexboolcheck(parsedmsg[1])) {
                     activeclients.splice(activeclients.indexOf(socket.nickname), 1);
                     allclients.splice(allclients.indexOf(socket.nickname), 1);
+                    socket.broadcast.emit('chat message', '<i>'+socket.nickname+' Has Changed their Username to: '+parsedmsg[1]+ '</i>');
                     socket.nickname = parsedmsg[1];
                     socket.emit('cookiesetter',socket.nickname);
                     allclients.push(socket.nickname);
