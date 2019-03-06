@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+    <title>RubleChat</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="style.css" rel="stylesheet">
+</head>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script src="clientside.js"></script>
+<body>
+
+<!--header-->
+<div class="header">
+    <h1>Chat</h1>
+    <div id='usrname'></div>
+</div>
+
+<!--flexbox-->
+<div class="main">
+    <div class="left">
+        <ul id="messages"></ul>
+        <form action="">
+            <input id="m" autocomplete="off" /><button>Send</button>
+        </form>
+    </div>
+    <div class="right">
+            <h1 class="uoheader">Users Online</h1>
+            <ul id="usersonline"></ul>
+    </div>
+</div>
+
+</body>
+</html>

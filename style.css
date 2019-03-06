@@ -1,0 +1,31 @@
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font: 13px Helvetica, Arial; }
+form { background: darkslategrey; padding: 2px; position: fixed; bottom: 0; width: 60%; }
+form input { border: 0; padding: 10px; width: 90%;}
+form button { width: 10%; background: darkslategrey; border: none; padding: 2px; }
+#messages {word-wrap: break-word; list-style-type: none; margin: 0; padding: 0; position: absolute; bottom: 10%;  width: 70%; max-height: 70%; overflow: auto; }
+#messages li { padding: 5px 10px;}
+#usersonline {list-style-type: none; overflow: hidden;}
+.header {
+    padding: 3px;
+    text-align: center;
+    background: darkslategrey;
+    color: white;
+    font-size: x-large;
+}
+.main { display: flex; flex-wrap: wrap;}
+.left { flex: 70%; }
+.right { flex: 30%; background-color: white; padding: 20px; text-align: center; overflow: auto}
+
+/*mobile sizing*/
+@media screen and (max-width: 750px) {
+    .main{
+        flex-direction: column;
+    }
+    .right{text-align: center; background-color: whitesmoke;}
+    #messages {width: 100%; max-height: 60%; }
+    form { width: 100%; }
+    #usersonline {max-height: 40%}
+    #usersonline li {display: block; float: left; padding: 3px;}
+}
